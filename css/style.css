@@ -1,0 +1,81 @@
+/* 全体設定 */
+body {
+  font-family: "Yu Gothic", sans-serif; /* 文字のフォント指定 */
+  margin: 0;  /* ページ全体の余白をなくす */
+  padding: 0; /* ページ内側の余白をなくす */
+  background-color: #ffffff; /* 背景色 */
+  color: #ffffff; /* 文字色 真っ白にすることで、初期背景と同化させている */
+}
+
+/* 横スクロールが出るのを防ぐ */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/*  ヘッダー設定  */
+header {
+  background-image: url('../images/mori.jpg'); /* 背景画像 */
+  background-size: cover; /* 画像を全面に敷き詰める */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを防ぐ */
+  color: white; /* ヘッダー文字の色 */
+  text-align: center; /* 中央寄せ */
+  padding: 5em 0; /* 上下に余白をつける */
+}
+
+/*  メイン設定 */
+main {
+  display: flex; /* 横並び（フレックスボックス） */
+  flex-wrap: wrap; /* 横幅が足りない場合は折り返し */
+  justify-content: center; /* 中央に揃える */
+  gap: 20px; /* 画像のすき間 */
+  width: 100%; /* 画面幅フルを基準に */
+  max-width: 1800px;  /* 1920pxで見たとき、4列にする*/
+  margin: 0 auto; /* 左右中央に配置 */
+  box-sizing: border-box; /* padding分で幅がずれないように */
+  padding: 20px; /* 内側余白 */
+}
+
+/* デザイン */
+main > div {
+  flex: 1 1 calc((100% - 40px) / 3);
+  /* 1行に3枚入るよう幅を自動調整
+     （gapの40pxを引いて3等分する） */
+
+  max-width: 350px; /* 大きくなりすぎないよう調整 */
+  min-width: 260px; /* 小さすぎないよう防止（文字や画像が切れない） */
+}
+
+/* 画像にマウスを乗せた時のアクション */
+main > div:hover {
+  transform: scale(1.05); /* 少し拡大 */
+}
+
+/*  画像設定  */
+main img {
+  width: 100%; /* 画像幅いっぱい */
+  height: 210px; /* 高さ固定 */
+  object-fit: cover; /* 画像が伸びずにトリミング表示 */
+  border-radius: 8px; /* 角丸 */
+  display: block; /* 行間の隙間を削除 */
+}
+
+/* 画面幅設定 */
+
+/* 950px以下 → 2列レイアウト */
+@media (max-width: 950px) {
+  main > div {
+    flex: 1 1 calc((100% - 20px) / 2); /* gap（隙間）20px分を引いて2等分 */
+  }
+}
+
+/* 600px以下 → スマホ用1列レイアウト */
+@media (max-width: 600px) {
+  main > div {
+    flex: 1 1 100%; /* 全幅を使って1列表示 */
+
+  }
+}
+
+

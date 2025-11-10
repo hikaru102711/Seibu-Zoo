@@ -1,0 +1,100 @@
+<!--おまけ要素-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>辟｡蟶ｰ螻樒函諷句庶螳ｹ蝨</title>
+
+</head>
+  <style>
+    /*  ページ全体の基本設定  */
+    body {
+      margin: 0; /* 余白の初期値をなくす */
+      height: 80vh;
+      background: black;
+      color: red;
+      font-family: sans-serif; /*ゴシック体 */
+      overflow-x: hidden; /* 横スクロールできない */
+    }
+
+    /*  ヘッダーテキスト  */
+    h1 {
+      text-align: center; /* 画面中央揃え */
+      margin-top: 50px;
+      font-size: 3em;
+      text-shadow: 0 0 20px red; /* 文字が光って見える */
+      animation: shake 0.5s infinite; /* ずっと震えるアニメーション */
+    }
+
+    /*  震える動きのアニメーション定義  */
+    @keyframes shake {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-5px,5px); }
+      50% { transform: translate(5px,-5px); }
+      75% { transform: translate(-5px,-5px); }
+      100% { transform: translate(5px,5px); }
+    }
+
+    /*  逃げる赤ボタンの見た目  */
+    .red-button {
+      position: absolute; /* ページ中どこでもランダム配置可能に */
+      background: darkred;
+      color: rgb(255, 255, 255);
+      padding: 10px 25px; /* 大きめボタン */
+      font-size: 2em;
+      border-radius: 30px; /* ふち丸く */
+      cursor: pointer; /* カーソルの形 */
+      box-shadow: 0 0 30px red;
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+
+  <script>
+    /* setIntervalで一定間隔ごとに処理を実行 */
+    setInterval(() => {
+
+      /*  ボタンを作成  */
+      const btn = document.createElement('button');
+      btn.textContent = '辭翫↓蜻ｽ荵槭＞';
+      btn.className = 'red-button';
+
+      /* 画面サイズを参照してランダム位置を設定 */
+      btn.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+      btn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+
+      /* ページへ追加 */
+      document.body.appendChild(btn);
+
+      /*  カーソル接近で逃げる処理  */
+      btn.addEventListener('mousemove', (e) => {
+        // ボタン中央の位置を取得
+        const rect = btn.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width/2);
+        const dy = e.clientY - (rect.top + rect.height/2);
+        const distance = Math.sqrt(dx*dx + dy*dy);
+
+        // 一定距離(150px)以内ならボタンが逃げる（逃げるボタンが逃げる仕様）
+        //逃げるボタンをあえて押しにくくすることにより、遷移ページの簡易ブラクラの怖さを高める仕様
+        if(distance < 150){
+          const moveX = (Math.random()-0.5)*300; // -150〜150px
+          const moveY = (Math.random()-0.5)*300;
+          btn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        }
+      });
+
+ //ボタンをクリックされたら
+
+    btn.addEventListener('click', () => {
+  window.location.href = 'urakuma.html'; // ← 遷移させたいページに変更
+
+      });
+    }, 50);
+  </script>
+</body>
+</html>

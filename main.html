@@ -1,0 +1,164 @@
+<!--おまけ要素-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>西武動物公園へようこそ!!!</title>
+
+  <style>
+    /*  ページ全体 */
+    body {
+      margin: 0; /* デフォルト余白を無効化 */
+      padding: 0;
+      height: 100vh; /* 画面の高さ全部を使用 */
+      overflow: hidden; /* 画面スクロールを禁止 */
+      display: flex; /* 子要素を中央に揃える準備 */
+      flex-direction: column; /* 上下方向に並べる */
+      justify-content: center; /* 上下中央揃え */
+      align-items: center; /* 左右中央揃え */
+      background: url('images/home.jpg') center/cover no-repeat; /* フル画面背景画像 */
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      color: #5219c4;
+      text-align: center;
+      cursor: default;
+      transition: background 1s ease, color 1s ease;
+
+    }
+
+    /*  タイトル文字  */
+    h1 {
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* 立体感を出す影 */
+      margin-bottom: 40px;
+      z-index: 10; /* 背景より上に表示 */
+      transition: all 1s ease; /* 変化にアニメ演出 */
+    }
+
+    /*  入園ボタン（最初に表示）  */
+    a.enter-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background: rgba(45, 42, 42, 0.9);
+      color: #18b93b; /* 色文字 */
+      text-decoration: none; /* 下線なし */
+      border-radius: 30px; /* 丸いボタン形状 */
+      font-size: 1.2em;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+
+    /* フッター */
+    footer {
+      position: absolute;
+      bottom: 20px; /* 画面下に固定 */
+      font-size: 0.9em;
+      color: rgba(255,255,255,0.7);
+      z-index: 1;
+    }
+
+
+    .scary-text {
+      position: fixed; /* 画面固定 */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      font-size: 5em;
+      color: #ff0000;
+      text-shadow: 0 0 30px rgba(255,0,0,0.8), 0 0 60px rgba(255,0,0,0.6); /* 光る文字 */
+      opacity: 0;
+      animation: appear 2s forwards; /* フェードイン */
+      z-index: 20;
+      pointer-events: none; /* マウス操作を無効 */
+    }
+
+    /*  フェードインアニメーション */
+    @keyframes appear {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* 増殖するB */
+    .button-copy {
+      position: absolute;
+      padding: 10px 25px;
+      background: #660000;
+      color: #fff;
+      border-radius: 25px;
+      font-size: 1.1em;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(255,0,0,0.6); /* 赤い光 */
+      transition: transform 0.3s ease, background 0.3s ease;
+      z-index: 5;
+    }
+
+    /*　ボタンに触れたとき、光る仕様*/
+.button-copy:hover {
+      background: #aa0000;
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 0 30px rgba(255,0,0,1);
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <!-- 大きなタイトル -->
+  <h1 id="title">西武動物ふれあい公園へようこそ！</h1>
+
+  <!-- 入園ボタン -->
+  <a href="index.html" class="enter-button" id="enterBtn">入園する！</a>
+
+<!--なくてもいい-->
+  <!--<footer>警告：この先は収容側です</footer>-->
+
+  <script>
+  /*  JavaScriptでホラー演出  */
+
+  const btn = document.getElementById('enterBtn'); // 入園ボタンを取得
+  const title = document.getElementById('title');  // タイトルを取得
+  let spawned = false; // 一度だけ発動させるため
+
+
+
+  btn.addEventListener('mouseenter', () => {
+    // マウスが初めてボタンに触れた瞬間に実行
+    if (spawned) return; // 2回発動防止
+    spawned = true;
+
+    btn.style.display = 'none'; // ボタンを消す（逃げた）
+
+    // 背景をホラー風に変更
+    document.body.style.background = 'radial-gradient(circle at center, #220000 0%, #000000 90%)';
+    document.body.style.color = '#ff0000';
+
+    // タイトルを消す
+    title.style.display = 'none';
+
+    //ボタンにマウスが触れると、表示される
+    const scaryText = document.createElement('div');
+    //scaryText.textContent = '無帰属生態収容園へようこそ…';
+    scaryText.classList.add('scary-text');
+    document.body.appendChild(scaryText);
+
+    // 偽の入園ボタンをまき散らす。数の指定(指定数が多いとスムーズに画面が変わらない,指定しすぎると、PCが固まる)
+    for (let i = 0; i < 200; i++) {
+      const clone = document.createElement('a');
+      clone.textContent = '収容';
+      clone.href = 'index.html';
+      clone.classList.add('button-copy');
+
+      // ランダムな位置を決める
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      clone.style.left = `${x}px`;
+      clone.style.top = `${y}px`;
+
+      document.body.appendChild(clone);
+    }
+  });
+  </script>
+</body>
+</html>
